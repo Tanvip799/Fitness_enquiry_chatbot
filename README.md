@@ -9,6 +9,7 @@ Performance Metrics: Computes precision to evaluate the chatbot's performance ba
 
 How to run?:
 If u want to train the model run: python training.py
+
 Start the Flask server by running python server.py.
 Start the client side by running python chatbot_client.py
 Send POST requests to http://localhost:8080/server with a JSON payload containing the user's message.
