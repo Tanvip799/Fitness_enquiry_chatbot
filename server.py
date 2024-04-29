@@ -4,7 +4,7 @@
 # Imports
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from chatbot_assistant import process_query
+from chatbot_functiont import process_query
 from ddtrace.runtime import RuntimeMetrics
 
 

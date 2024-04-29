@@ -7,13 +7,13 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 
 # Open preprocessing pickled data from chatbot_train_model.py.
-pickle_file = open(r'C:\Users\tanvi\Desktop\intern\NLPChatbot\pickle_data.pickle', 'rb')
+pickle_file = open(r'C:\Users\tanvi\Desktop\intern\Fitness_enquiry_chatbot-1\data.pickle', 'rb')
 data = pickle.load(pickle_file)
 le = pickle.load(pickle_file)
 tokenizer = pickle.load(pickle_file)
 
 # Load model that was created with chatbot_train_model.py.
-model = tf.keras.models.load_model(r"C:\Users\tanvi\Desktop\intern\NLPChatbot\chatbot_model.h5")
+model = tf.keras.models.load_model(r"C:\Users\tanvi\Desktop\intern\Fitness_enquiry_chatbot-1\intern_assignment_model.h5")
 
 # Set truncating type and maxlen.
 trunc_type = 'post'
