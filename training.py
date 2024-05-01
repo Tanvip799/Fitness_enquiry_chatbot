@@ -1,3 +1,5 @@
+
+
 import json
 import numpy as np
 import pickle
@@ -8,15 +10,19 @@ from tensorflow import keras
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 
-
 responses = []
 training_sentences = []
 training_tags = []
 unique_tags = []
 
+# Maintain conversation context
+context = {
+    "current_client": None,
+    "current_class": None
+}
 
 # Result is a Python dictionary.
-with open(r'C:\Users\tanvi\Desktop\intern\NLPChatbot\intents.json') as file:
+with open('intents.json') as file:
     data = json.load(file)
 
 # Iterating through the intents.json data
@@ -61,7 +67,6 @@ model.add(keras.layers.Dense(unique_tags_len, activation='softmax'))
 #Model summary.
 model.summary()
 
-
 training_tags_ndarray = np.array(training_tags)
 # Set Keras epoch value.
 EPOCHS = 100
@@ -78,3 +83,27 @@ pickle.dump(tokenizer, pickle_file)
 pickle_file.close()
 # Save model.
 tf.keras.models.save_model(model, "chatbot_model.h5")
+
+# Context handling based on intents
+def handle_context(intent_tag, entities):
+    global context
+    response = ""
+    
+    if intent_tag == "add-client-to-class":
+        if "client" in entities and "class" in entities:
+            context["current_client"] = entities["client"]
+            context["current_class"] = entities["class"]
+            response = f"Sure! I'll add {entities['client']} to {entities['class']}."
+        else:
+            response = "Which client would you like to add to which class?"
+    elif intent_tag == "remove-client-from-class":
+        if "client" in entities:
+            context["current_client"] = entities["client"]
+            response = f"Okay! I'll remove {entities['client']} from the class."
+        else:
+            response = "Which client would you like to remove from the class?"
+    else:
+        response = "I'm sorry, I didn't understand that."
+    
+    return response
+
